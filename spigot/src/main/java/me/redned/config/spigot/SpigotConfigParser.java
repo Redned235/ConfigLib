@@ -454,8 +454,15 @@ public final class SpigotConfigParser extends ConfigParser<ConfigurationSection>
                     objectList.add(parseObject(objectProvider, object));
                 }
             } else {
-                // Assume it's a primitive
-                objectList.addAll(list);
+                // Check if type is enum
+                if (listType.isEnum()) {
+                    for (Object object : list) {
+                        objectList.add(Enum.valueOf((Class<? extends Enum>) listType, object.toString().toUpperCase(Locale.ROOT)));
+                    }
+                } else {
+                    // Assume it's a primitive
+                    objectList.addAll(list);
+                }
             }
 
             return objectList;
