@@ -5,7 +5,7 @@ A dead simple configuration library.
 This is a dead-simple configuration library which allows for you to easily handle and parse values from configuration files. It is primarily POJO-focused, working similarly to Gson. While primarily designed to wrap around Spigot's configuration system, wrappers can be created for any platform, and contributions are most certainly welcome.
 
 ## Usage
-To start, this library is broken into two parts: The `ConfigParser` and the `ConfigSerializer`.
+To start, this library is broken into two parts: The [`ConfigParser`](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/ConfigParser.java) and the [`ConfigSerializer`](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/ConfigSerializer.java).
 
 ### ConfigParser
 The `ConfigParser` is the primary entrypoint to read configuration files. This can simply be retrieved by running `Config.parser()`, which allows for loading configuration files.
@@ -14,7 +14,7 @@ The `ConfigParser` is the primary entrypoint to read configuration files. This c
 The `ConfigSerializer` is the primary entrypoint to write configuration files. This can simply be retrieved by running `Config.serializer()`, which allows for saving configuration files.
 
 ### Creating a config
-A config itself is just represented as a POJO, and does not need to implement anything. However, this is where the `@ConfigOption` annotation comes into play, which is used over a parameter to denote that it should be retrieved from the configuration file.
+A config itself is just represented as a POJO, and does not need to implement anything. However, this is where the [`@ConfigOption`](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/ConfigOption.java) annotation comes into play, which is used over a parameter to denote that it should be retrieved from the configuration file.
 
 Here is an example
 ```java
@@ -58,7 +58,7 @@ try {
 ```
 
 ### Adding custom types
-This library allows for easy support for implementing custom types, allowing you to parse custom objects. This can be done by running `Config.provder().registerProvider(Class<T>, Parser<T>)`. Examples for default types can be found [here](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/DefaultParsers.java). Serializers can be registered in a similar way, by running `Config.provider().registerSerializer(Class<T>, Serializer<T>)`, with examples found [here](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/DefaultSerializers.java).
+This library allows for easy support for implementing custom types, allowing you to parse custom objects. This can be done by running `Config.parser().registerProvider(Class<T>, Parser<T>)`. Examples for default types can be found [here](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/DefaultParsers.java). Serializers can be registered in a similar way, by running `Config.serializer().registerSerializer(Class<T>, Serializer<T>)`, with examples found [here](https://github.com/Redned235/ConfigLib/blob/master/api/src/main/java/me/redned/config/DefaultSerializers.java).
 
 ## Platforms
 Currently, this project works with Spigot 1.19.4+ (with additional support for Paper), but can easily be expanded to support other config libraries, such as Configurate or BungeeCord's config. This also adds support for serializing various Minecraft types, such as `ItemStack`s, `BlockData` and `Location`s.
