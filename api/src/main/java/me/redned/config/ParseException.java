@@ -91,7 +91,7 @@ public class ParseException extends Exception {
         boolean printedStacktrace = false;
         if (!exception.userError || exception.cause == Cause.UNKNOWN) {
             builder.append("It is likely that this error is due to a problem or misconfiguration in the plugin. ");
-            builder.append("Please report the following stacktrace to Redned!\n");
+            builder.append("Please report the following stacktrace to the plugin author!\n");
             builder.append("Stacktrace:\n");
 
             StringWriter writer = new StringWriter();
