@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -273,7 +274,7 @@ public final class SpigotConfigParser extends ConfigParser<ConfigurationSection>
                     }
                 } else if (Map.class.isAssignableFrom(type)) {
                     try {
-                        Map<String, Object> map = parseMap(sourceFile, instance, type, configuration, name, field.getGenericType());
+                        Map<String, Object> map = parseMap(sourceFile, instance, type, configuration, name, field.getGenericType(), configOption.ordered());
                         if (map == null) {
                             return;
                         }
@@ -478,7 +479,7 @@ public final class SpigotConfigParser extends ConfigParser<ConfigurationSection>
     }
 
     @Nullable
-    private Map<String, Object> parseMap(@Nullable Path sourceFile, Object instance, Class<?> type, ConfigurationSection configuration, String name, Type genericType) throws ParseException {
+    private Map<String, Object> parseMap(@Nullable Path sourceFile, Object instance, Class<?> type, ConfigurationSection configuration, String name, Type genericType, boolean ordered) throws ParseException {
         ConfigurationSection configurationSection = configuration.getConfigurationSection(name);
         if (configurationSection == null) {
             if (configuration.contains(name)) {
@@ -494,7 +495,7 @@ public final class SpigotConfigParser extends ConfigParser<ConfigurationSection>
             }
         }
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = ordered ? new LinkedHashMap<>() : new HashMap<>();
         for (String key : configurationSection.getKeys(false)) {
             ConfigurationSection section = null;
             if (configurationSection.isConfigurationSection(key)) {
@@ -535,7 +536,7 @@ public final class SpigotConfigParser extends ConfigParser<ConfigurationSection>
                             continue;
                         }
                     } else if (Map.class.isAssignableFrom(valueClass)) {
-                        Map<String, Object> innerMap = parseMap(sourceFile, instance, valueClass, section, key, value);
+                        Map<String, Object> innerMap = parseMap(sourceFile, instance, valueClass, section, key, value, ordered);
                         if (innerMap != null) {
                             map.put(key, innerMap);
                             continue;

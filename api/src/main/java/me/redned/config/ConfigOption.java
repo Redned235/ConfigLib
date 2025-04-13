@@ -36,6 +36,16 @@ public @interface ConfigOption {
     boolean required() default false;
 
     /**
+     * If the order should be retained when loading the config value.
+     * <p>
+     * This is primarily useful for {@link java.util.Map} types where the order
+     * of the keys should be retained in the map implementation.
+     *
+     * @return if the order should be retained
+     */
+    boolean ordered() default false;
+
+    /**
      * The context provider for the option.
      *
      * @return the context provider for the option
